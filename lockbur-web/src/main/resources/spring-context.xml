@@ -57,7 +57,7 @@
         <property name="keepAliveSeconds" value="60" />
     </bean>
     
-    <import resource="spring/spring-shiro.xml"></import>
+    <!--<import resource="spring/spring-shiro.xml"></import>-->
     
     <import resource="spring/spring-mybatis.xml"></import>
 
