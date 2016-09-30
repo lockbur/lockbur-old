@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aboutdata.schedule.task;
 
 import com.aboutdata.commons.enums.PhotoStatus;
@@ -43,25 +38,25 @@ public class BuildIndexTask implements Runnable {
 
         StringBuilder tags = new StringBuilder();
         //拼装tags 便于搜索
-        if (photo.getTags() != null & photo.getTags().size() > 0) {
-            for (Tag tag : photo.getTags()) {
-                tags.append(tag.getName()).append(",");
-            }
-            //删除最后一个逗号
-            tags.deleteCharAt(tags.length() - 1);
-            logger.debug("solr tags {}", tags.toString());
-            doc.addField("tags", tags.toString());
-        } else {
-            //没有标签 则显示空
-            doc.addField("tags", "");
-        }
+//        if (photo.getTags() != null & photo.getTags().size() > 0) {
+//            for (Tag tag : photo.getTags()) {
+//                tags.append(tag.getName()).append(",");
+//            }
+//            //删除最后一个逗号
+//            tags.deleteCharAt(tags.length() - 1);
+//            logger.debug("solr tags {}", tags.toString());
+//            doc.addField("tags", tags.toString());
+//        } else {
+//            //没有标签 则显示空
+//            doc.addField("tags", "");
+//        }
 
         doc.addField("large", photo.getLarge());
         doc.addField("medium", photo.getMedium());
         doc.addField("thumbnail", photo.getThumbnail());
         doc.addField("source", photo.getSource());
-        doc.addField("member_id", photo.getMember().getId());
-        doc.addField("member_name", photo.getMember().getUsername());
+        //doc.addField("member_id", photo.getMember().getId());
+        //doc.addField("member_name", photo.getMember().getUsername());
         doc.addField("wallhaven", photo.getWallhaven());
         doc.addField("create_date", photo.getCreateDate());
         doc.addField("modify_date", photo.getModifyDate());

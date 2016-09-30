@@ -17,7 +17,7 @@ public class RoleModel extends BaseModel {
     private String name;
     private Boolean isSystem;
     private String description;
-    private List<String> authorities = new ArrayList();
+    private List<String> authorities = new ArrayList<String>();
 
     public String getName() {
         return name;

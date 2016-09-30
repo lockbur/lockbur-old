@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aboutdata.model;
 
 import com.aboutdata.commons.enums.PhotoStatus;
-import com.aboutdata.domain.PhotosAlbum;
 import java.util.List;
 
 /**
@@ -65,7 +59,6 @@ public class PhotosModel extends BaseModel {
      */
     private PhotoStatus status;
 
-    private PhotosAlbum album;
 
     private MemberModel member;
 
@@ -143,13 +136,6 @@ public class PhotosModel extends BaseModel {
         this.status = status;
     }
 
-    public PhotosAlbum getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(PhotosAlbum album) {
-        this.album = album;
-    }
 
     public MemberModel getMember() {
         return member;
@@ -197,11 +183,6 @@ public class PhotosModel extends BaseModel {
 
     public void setSize(long size) {
         this.size = size;
-    }
-
-    @Override
-    public String toString() {
-        return "PhotosModel{" + "title=" + title + ", width=" + width + ", height=" + height + ", size=" + size + ", source=" + source + ", large=" + large + ", medium=" + medium + ", thumbnail=" + thumbnail + ", wallhaven=" + wallhaven + ", storageHost=" + storageHost + ", order=" + order + ", description=" + description + ", status=" + status + ", album=" + album + ", member=" + member + ", tags=" + tags + '}';
     }
 
 }

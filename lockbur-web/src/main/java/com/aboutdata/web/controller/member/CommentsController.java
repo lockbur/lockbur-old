@@ -53,7 +53,7 @@ public class CommentsController {
         comments.setType(CommentsType.User);
         comments.setEntityId(userId);
         comments.setComment(comment);
-        comments.setMember(member);
+        //comments.setMember(member);
 
         commentsService.save(comments);
 

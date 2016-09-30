@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aboutdata.dao.CommentsDao">
+
+    <resultMap id="commentsResultMap" type="com.aboutdata.domain.Comments">
+        <result property="id" column="id"></result>
+        <result property="entityId" column="entityId"></result>
+        <result property="comment" column="comment"></result>
+        <result property="type" column="type"></result>
+        <result property="memberId" column="memberId"></result>
+
+        <result property="createDate" column="createDate"></result>
+        <result property="modifyDate" column="modifyDate"></result>
+    </resultMap>
+
+    <select id="findByTypeAndEntityId" resultMap="commentsResultMap">
+       select obj.* from xx_comments obj where obj.member.id =#{memberId} order by obj.createDate asc
+    </select>
+
+    <select id="findByTypeAndEntityId" resultMap="commentsResultMap">
+        select obj.* from xx_comments obj where obj.member.id =#{memberId} and obj.isDefault=true order by obj.createDate asc
+    </select>
+
+    <select id="findByType" resultMap="commentsResultMap">
+        select obj.* from xx_comments obj where obj.member.id =#{memberId} and obj.isDefault=true order by obj.createDate asc
+    </select>
+
+</mapper>

@@ -1,18 +1,6 @@
 package com.aboutdata.domain;
 
 import com.aboutdata.commons.enums.PhotoStatus;
-import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import org.hibernate.validator.constraints.Length;
 
@@ -20,8 +8,6 @@ import org.hibernate.validator.constraints.Length;
  *
  * @author Administrator
  */
-@Entity
-@Table(name = "xx_photos")
 public class Photos extends BaseEntity {
 
     /**
@@ -33,16 +19,13 @@ public class Photos extends BaseEntity {
     /**
      * 壁纸原图的宽高
      */
-    @Column(nullable = false)
     private int width = 0;
 
-    @Column(nullable = false)
     private int height = 0;
 
     /**
      * 图片大小
      */
-    @Column(nullable = false)
     private long size;
     /**
      * 原图片
@@ -67,20 +50,17 @@ public class Photos extends BaseEntity {
     /**
      * 是否来自wallhaven
      */
-    @Column(length = 9)
     private String wallhaven;
 
     /**
      * 图片服务器地址
      */
-    @Column(length = 30)
     private String storageHost;
 
     /**
      * 排序 暂时用orders用来存储访问次数
      */
     @Min(0)
-    @Column(name = "orders")
     private Integer order;
 
     /**
@@ -92,25 +72,10 @@ public class Photos extends BaseEntity {
     /**
      * PhotoStatus 状态信息
      */
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = true, length = 20)
     private PhotoStatus status = PhotoStatus.ASSIGNED;
 
-    @ManyToOne
-    @JoinColumn(name = "album_id", nullable = false)
-    private PhotosAlbum album;
+    private String memberId;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
-    private Member member;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "xx_photos_tag",
-            joinColumns = {
-                @JoinColumn(name = "photo_id")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "tag_id")})
-    private Set<Tag> tags;
 
     public String getTitle() {
         return title;
@@ -181,30 +146,6 @@ public class Photos extends BaseEntity {
         this.order = order;
     }
 
-    public Set<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
-    }
-
-    public Member getMember() {
-        return member;
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
-    public PhotosAlbum getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(PhotosAlbum album) {
-        this.album = album;
-    }
-
     public String getWallhaven() {
         return wallhaven;
     }
@@ -245,10 +186,11 @@ public class Photos extends BaseEntity {
         this.size = size;
     }
 
-    @Override
-    public String toString() {
-        return "Photos{" + "title=" + title + ", width=" + width + ", height=" + height + ", size=" + size + ", source=" + source + ", large=" + large + ", medium=" + medium + ", thumbnail=" + thumbnail + ", wallhaven=" + wallhaven + ", storageHost=" + storageHost + ", order=" + order + ", description=" + description + ", status=" + status + ", album=" + album + ", member=" + member + ", tags=" + tags + '}';
+    public String getMemberId() {
+        return memberId;
     }
-    
 
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
+    }
 }

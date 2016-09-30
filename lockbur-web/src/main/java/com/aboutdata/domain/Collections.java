@@ -7,14 +7,7 @@ package com.aboutdata.domain;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -23,26 +16,15 @@ import org.hibernate.validator.constraints.NotEmpty;
  *
  * @author Administrator
  */
-@Entity
-@Table(name = "xx_collections")
 public class Collections extends BaseEntity {
-
     @Length(max = 200)
     private String name;
-
     /**
      * 是否默认
      */
-    @Column(nullable = false, updatable = false)
     private Boolean isDefault = false;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
-    private Member member;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "xx_collections_photos")
-    private Set<Photos> photos = new HashSet<Photos>();
+    private int memberId;
 
     public String getName() {
         return name;
@@ -52,20 +34,12 @@ public class Collections extends BaseEntity {
         this.name = name;
     }
 
-    public Member getMember() {
-        return member;
+    public int getMemberId() {
+        return memberId;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
-    public Set<Photos> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(Set<Photos> photos) {
-        this.photos = photos;
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
     }
 
     public Boolean getIsDefault() {
@@ -74,11 +48,6 @@ public class Collections extends BaseEntity {
 
     public void setIsDefault(Boolean isDefault) {
         this.isDefault = isDefault;
-    }
-
-    @Override
-    public String toString() {
-        return "Collections{" + "name=" + name + ", isDefault=" + isDefault + ", member=" + member + ", photos=" + photos + '}';
     }
 
 }

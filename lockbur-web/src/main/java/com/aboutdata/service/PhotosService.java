@@ -1,17 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aboutdata.service;
 
 import com.aboutdata.commons.enums.PhotoStatus;
 import com.aboutdata.domain.Photos;
 import com.aboutdata.model.PhotosModel;
-import java.util.List;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.aboutdata.rest.Page;
+import com.aboutdata.rest.Pageable;
 
+import java.util.List;
 /**
  *
  * @author youyou

@@ -1,21 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aboutdata.web.controller.member;
 
 import com.aboutdata.commons.ResponseMessage;
 import com.aboutdata.commons.enums.PhotoStatus;
 import com.aboutdata.domain.Member;
-import com.aboutdata.domain.Photos;
-import com.aboutdata.domain.PhotosAlbum;
+
 import com.aboutdata.domain.Tag;
 import com.aboutdata.model.PhotosModel;
 import com.aboutdata.model.TagModel;
 import com.aboutdata.service.ImageGraphicsService;
 import com.aboutdata.service.MemberService;
-import com.aboutdata.service.PhotosAlbumService;
 import com.aboutdata.service.PhotosService;
 import com.aboutdata.service.SearchService;
 import com.aboutdata.service.TagService;
@@ -30,7 +23,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -46,8 +38,7 @@ public class PhotosController {
     @Resource
     private PhotosService photosService;
 
-    @Resource
-    private PhotosAlbumService photosAlbumService;
+
 
     @Resource
     private ImageGraphicsService imageGraphicsService;
@@ -65,8 +56,8 @@ public class PhotosController {
 
     public String index(Integer pageNumber, ModelMap model) {
 
-        List<PhotosAlbum> albums = photosAlbumService.findRoots();
-        model.addAttribute("albums", albums);
+       //List<PhotosAlbum> albums = photosAlbumService.findRoots();
+        //model.addAttribute("albums", albums);
         return "/member/photos/album";
     }
 

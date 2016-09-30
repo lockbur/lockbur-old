@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aboutdata.web.controller;
 
 import com.aboutdata.commons.enums.Oauth2Type;
@@ -10,7 +5,6 @@ import com.aboutdata.domain.Member;
 import com.aboutdata.domain.OpenAuth2;
 import com.aboutdata.security.shiro.Principal;
 import com.aboutdata.security.utils.SecurityPasswordUtils;
-import com.aboutdata.service.MemberRankService;
 import com.aboutdata.service.MemberService;
 import com.aboutdata.service.OpenAuth2Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,8 +44,6 @@ public class SinaWeiboLoginController {
     @Resource
     private MemberService memberService;
 
-    @Resource(name = "memberRankServiceImpl")
-    private MemberRankService memberRankService;
 
     @RequestMapping(value = "/oauth2/sina", method = RequestMethod.GET)
     public String displayGithubLogin(Model model) {
@@ -95,8 +87,6 @@ public class SinaWeiboLoginController {
                 member.setSalt(salt);
                 member.setPassword(passphrase);
                 member.setEmail(salt + "@temp.com");
-                member.setPoint(1l);
-
                 member.setIsEnabled(true);
                 member.setIsLocked(false);
                 member.setLoginFailureCount(0);
@@ -104,12 +94,11 @@ public class SinaWeiboLoginController {
 //                member.setRegisterIp(request.getRemoteAddr());
 //                member.setLoginIp(request.getRemoteAddr());
                 member.setLoginDate(new Date());
-                member.setMemberRank(memberRankService.findDefault());
                 //根据weibo用户id创建一个用户
                 memberService.create(member);
 
                 openAuth2 = new OpenAuth2();
-                openAuth2.setMember(member);
+                //openAuth2.setMember(member);
                 openAuth2.setOauthId(uid);
                 openAuth2.setType(Oauth2Type.SINAWEIBO);
                 //记录到数据库 保存改用户曾经再本网站登录过
@@ -118,8 +107,8 @@ public class SinaWeiboLoginController {
             } else {
                 logger.info("weiboProfile already regist {}", uid);
 
-                Member member = openAuth2.getMember();
-                session.setAttribute(Member.PRINCIPAL_ATTRIBUTE_NAME, new Principal(member.getId(), member.getUsername()));
+                //Member member = openAuth2.getMember();
+                //session.setAttribute(Member.PRINCIPAL_ATTRIBUTE_NAME, new Principal(member.getId(), member.getUsername()));
             }
         } catch (IOException ex) {
             logger.info("oauth_callback parse json error  {}", ex);

@@ -1,11 +1,9 @@
 package com.aboutdata.service;
 
 import com.aboutdata.domain.Member;
-import com.aboutdata.domain.SafeKey;
 import com.aboutdata.model.MemberModel;
-import java.util.List;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.aboutdata.rest.Page;
+import com.aboutdata.rest.Pageable;
 
 /**
  * Service - 会员
@@ -77,28 +75,14 @@ public interface MemberService {
      */
     String getCurrentUsername();
 
-    public Member update(Member member);
+    public void update(Member member);
 
-    public Member create(Member member);
+    public void create(Member member);
 
     public Page<MemberModel> find(Pageable pageable);
 
     public MemberModel findById(String id);
 
     public boolean recoverPassword(String email);
-
-    /**
-     * @ 获取用户重置密码时的安全密钥
-     * @param memberId
-     * @return
-     */
-    public List<SafeKey> getSafeKey(String memberId);
-
-    /**
-     * 当用户重置新密码后 之前重置密钥safeKey全部删除
-     *
-     * @param memberId
-     */
-    public void expireSafekey(String memberId);
 
 }

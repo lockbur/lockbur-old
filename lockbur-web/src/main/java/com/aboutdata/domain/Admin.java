@@ -1,18 +1,8 @@
 package com.aboutdata.domain;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -21,9 +11,6 @@ import org.hibernate.validator.constraints.NotEmpty;
  * Entity - 管理员
  *
  */
-@Entity
-@Table(name = "xx_admin")
-//@SequenceGenerator(name = "sequenceGenerator", sequenceName = "xx_admin_sequence")
 public class Admin extends BaseEntity {
 
     private static final long serialVersionUID = -7519486823153844426L;
@@ -31,26 +18,23 @@ public class Admin extends BaseEntity {
     /**
      * 用户名
      */
-    @NotEmpty(groups = Save.class)
+    @NotEmpty
     @Pattern(regexp = "^[0-9a-z_A-Z\\u4e00-\\u9fa5]+$")
     @Length(min = 2, max = 20)
-    @Column(nullable = false, updatable = false, unique = true, length = 100)
     private String username;
 
     /**
      * 密码
      */
-    @NotEmpty(groups = Save.class)
+    @NotEmpty
     @Pattern(regexp = "^[^\\s&\"<>]+$")
     @Length(min = 4, max = 32)
-    @Column(nullable = false, length = 32)
     private String password;
 
     /**
      * 密码salt
      */
-    @NotEmpty(groups = Save.class)
-    @Column(nullable = false, length = 64)
+    @NotEmpty
     private String salt;
 
     /**
@@ -59,7 +43,6 @@ public class Admin extends BaseEntity {
     @NotEmpty
     @Email
     @Length(max = 200)
-    @Column(nullable = false)
     private String email;
 
     /**
@@ -78,19 +61,16 @@ public class Admin extends BaseEntity {
      * 是否启用
      */
     @NotNull
-    @Column(nullable = false)
     private Boolean isEnabled;
 
     /**
      * 是否锁定
      */
-    @Column(nullable = false)
     private Boolean isLocked;
 
     /**
      * 连续登录失败次数
      */
-    @Column(nullable = false)
     private Integer loginFailureCount;
 
     /**
@@ -108,13 +88,6 @@ public class Admin extends BaseEntity {
      */
     private String loginIp;
 
-    /**
-     * 角色
-     */
-    @NotEmpty
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "xx_admin_role")
-    private Set<Role> roles = new HashSet<Role>();
 
     public String getUsername() {
         return username;
@@ -246,20 +219,4 @@ public class Admin extends BaseEntity {
     public void setLoginIp(String loginIp) {
         this.loginIp = loginIp;
     }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    @Override
-    public String toString() {
-        return "Admin{" + "username=" + username + ", password=" + password + ", salt=" + salt + ", email=" + email + ", name=" + name + ", department=" + department + ", isEnabled=" + isEnabled + ", isLocked=" + isLocked + ", loginFailureCount=" + loginFailureCount + ", lockedDate=" + lockedDate + ", loginDate=" + loginDate + ", loginIp=" + loginIp + ", roles=" + roles + '}';
-    }
-
-   
-
 }

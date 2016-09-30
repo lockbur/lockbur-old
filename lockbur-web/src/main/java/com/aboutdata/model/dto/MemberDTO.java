@@ -31,7 +31,6 @@ public class MemberDTO {
             result.setIsEnabled(member.getIsEnabled());
             result.setIsLocked(member.getIsLocked());
             result.setLockedDate(member.getLockedDate());
-            result.setRegisterIp(member.getRegisterIp());
             result.setLoginFailureCount(member.getLoginFailureCount());
             result.setLoginDate(member.getLoginDate());
             result.setCreateDate(member.getCreateDate());
@@ -49,7 +48,7 @@ public class MemberDTO {
     public static List<MemberModel> getMemberModelsDTO(List<Member> members) {
         List<MemberModel> result = null;
         if (members != null && members.size() > 0) {
-            result = new ArrayList(members.size());
+            result = new ArrayList<MemberModel>(members.size());
             for (Member member : members) {
                 //DTO转换
                 MemberModel model = new MemberModel();
@@ -60,7 +59,6 @@ public class MemberDTO {
                 model.setIsEnabled(member.getIsEnabled());
                 model.setIsLocked(member.getIsLocked());
                 model.setLockedDate(member.getLockedDate());
-                model.setRegisterIp(member.getRegisterIp());
                 model.setLoginFailureCount(member.getLoginFailureCount());
                 model.setLoginDate(member.getLoginDate());
                 model.setCreateDate(member.getCreateDate());

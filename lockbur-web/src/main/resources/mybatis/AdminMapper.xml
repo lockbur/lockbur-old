@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aboutdata.dao.AdminDao">
+
+    <resultMap id="adminResultMap" type="com.aboutdata.domain.Admin">
+        <result property="id" column="id"></result>
+        <result property="username" column="username"></result>
+        <result property="password" column="password"></result>
+        <result property="email" column="email"></result>
+        <result property="name" column="name"></result>
+        <result property="department" column="department"></result>
+        <result property="isEnabled" column="isEnabled"></result>
+        <result property="isLocked" column="isLocked"></result>
+        <result property="loginFailureCount" column="loginFailureCount"></result>
+        <result property="lockedDate" column="lockedDate"></result>
+        <result property="loginDate" column="loginDate"></result>
+        <result property="loginIp" column="loginIp"></result>
+
+        <result property="createDate" column="createDate"></result>
+        <result property="modifyDate" column="modifyDate"></result>
+    </resultMap>
+
+    <select id="usernameExists" parameterType="String" resultType="int">
+        select count(*) from xx_admin where username = lower(#{username})
+    </select>
+
+    <select id="findByUsername" parameterType="String" resultMap="adminResultMap">
+        select admin.* from xx_admin admin where admin.username = lower(#{username})
+    </select>
+
+    <select id="findByUsernameLike" parameterType="String" resultMap="adminResultMap">
+        select admin.* from xx_admin admin where admin.username = lower(#{username})
+    </select>
+
+</mapper>

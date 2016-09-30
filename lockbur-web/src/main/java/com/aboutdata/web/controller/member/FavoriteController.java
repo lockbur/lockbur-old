@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aboutdata.web.controller.member;
 
 import com.aboutdata.commons.ResponseMessage;
@@ -65,7 +60,7 @@ public class FavoriteController {
         Collections collections = new Collections();
         collections.setName(name);
         collections.setIsDefault(isPrivate);
-        collections.setMember(member);
+        //collections.setMember(member);
         
         collectionsService.create(collections);
         
@@ -89,7 +84,7 @@ public class FavoriteController {
             collections = new Collections();
             collections.setIsDefault(Boolean.TRUE);
             collections.setName("默认收藏夹");
-            collections.setMember(member);
+            //collections.setMember(member);
             collectionsService.create(collections);
         }
         collections = collectionsService.findDefaultByMember(member.getId());

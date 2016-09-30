@@ -4,8 +4,6 @@ import com.aboutdata.domain.Member;
 
 import com.aboutdata.security.shiro.Principal;
 import com.aboutdata.security.utils.SecurityPasswordUtils;
-import com.aboutdata.service.MemberAttributeService;
-import com.aboutdata.service.MemberRankService;
 import com.aboutdata.service.MemberService;
 import java.util.Date;
 
@@ -33,27 +31,6 @@ public class RegisterController {
     @Resource
     private MemberService memberService;
 
-    @Resource(name = "memberRankServiceImpl")
-    private MemberRankService memberRankService;
-
-    @Resource(name = "memberAttributeServiceImpl")
-    private MemberAttributeService memberAttributeService;
-
-    /**
-     * 检查用户名是否被禁用或已存在
-     */
-//	@RequestMapping(value = "/check_username", method = RequestMethod.GET)
-//	public @ResponseBody
-//	boolean checkUsername(String username) {
-//		if (StringUtils.isEmpty(username)) {
-//			return false;
-//		}
-//		if (memberService.usernameDisabled(username) || memberService.usernameExists(username)) {
-//			return false;
-//		} else {
-//			return true;
-//		}
-//	}
     /**
      * 检查E-mail是否存在
      */
@@ -113,16 +90,15 @@ public class RegisterController {
         member.setSalt(salt);
         member.setPassword(passphrase);
         member.setEmail(email);
-        member.setPoint(1l);
+
 
         member.setIsEnabled(true);
         member.setIsLocked(false);
         member.setLoginFailureCount(0);
         member.setLockedDate(null);
-        member.setRegisterIp(request.getRemoteAddr());
+
         member.setLoginIp(request.getRemoteAddr());
         member.setLoginDate(new Date());
-        member.setMemberRank(memberRankService.findDefault());
 
         memberService.create(member);
 

@@ -6,13 +6,6 @@
 package com.aboutdata.domain;
 
 import com.aboutdata.commons.enums.CommentsType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import org.hibernate.validator.constraints.Length;
 
 /**
@@ -20,29 +13,19 @@ import org.hibernate.validator.constraints.Length;
  *
  * @author Administrator
  */
-@Entity
-@Table(name = "xx_comments")
 public class Comments extends BaseEntity {
-
     /**
      *
      * 被评论的主体
      */
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "entity_id", nullable = false)
-    @Column(name ="entity_id",length = 36)
     private String entityId;
 
     @Length(max = 500)
     private String comment;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = true, length = 10)
     private CommentsType type;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
-    private Member member;
+    private String memberId;
 
     public String getEntityId() {
         return entityId;
@@ -68,12 +51,11 @@ public class Comments extends BaseEntity {
         this.type = type;
     }
 
-    public Member getMember() {
-        return member;
+    public String getMemberId() {
+        return memberId;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
     }
-
 }

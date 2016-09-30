@@ -1,27 +1,13 @@
 
-import com.aboutdata.commons.application.InjectLogger;
 import com.aboutdata.commons.enums.CommentsType;
 import com.aboutdata.dao.CommentsDao;
-import com.aboutdata.dao.MessageDao;
-import com.aboutdata.dao.PhotosColorsDao;
 import com.aboutdata.domain.Comments;
-import com.aboutdata.domain.Member;
-import com.aboutdata.domain.Message;
-import com.aboutdata.domain.Photos;
-import com.aboutdata.domain.PhotosAlbum;
-import com.aboutdata.domain.PhotosRequest;
-import com.aboutdata.service.PhotosColorsService;
-import com.aboutdata.service.PhotosRequestService;
-import com.aboutdata.service.bean.CommentsServiceImpl;
 import java.util.List;
 import javax.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
@@ -40,11 +26,6 @@ public class DemoTest extends AbstractJUnit4SpringContextTests {
 
     public static Logger logger = LoggerFactory.getLogger(DemoTest.class);
 
-    @Resource
-    private PhotosColorsDao photosColorsDao;
-
-    @Resource
-    private PhotosColorsService photosColorsService;
 
     @Resource
     private CommentsDao commentsDao;

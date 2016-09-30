@@ -1,15 +1,9 @@
 package com.aboutdata.commons;
 
+import com.aboutdata.rest.Page;
+
 import java.io.Serializable;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import org.springframework.data.domain.Page;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -34,7 +28,7 @@ public class TableData<T> implements Serializable {
             final int sEcho,
             final boolean dim) {
         this.aaData = pr.getContent();
-        this.iTotalDisplayRecords = pr.getTotalElements();
+        this.iTotalDisplayRecords = pr.getTotal();
         this.iTotalRecords = pr.getTotalPages();
         this.sEcho = sEcho+1;
     }

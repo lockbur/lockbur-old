@@ -1,20 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aboutdata.web.controller;
 
 import com.aboutdata.model.PhotosModel;
+import com.aboutdata.rest.Page;
+import com.aboutdata.rest.Pageable;
 import com.aboutdata.service.PhotosService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,8 +39,8 @@ public class LatestController {
     @RequestMapping
     public String list(HttpServletRequest request, Model model) {
 
-        Sort sort = new Sort(Sort.Direction.DESC, "createDate");
-        Pageable pageable = new PageRequest(0, 24, sort);
+        //Sort sort = new Sort(Sort.Direction.DESC, "createDate");
+        Pageable pageable = new Pageable(0, 24);
 
         Page<PhotosModel> pages = photosService.find(pageable);
 
@@ -73,8 +66,8 @@ public class LatestController {
             page = page - 1;
         }
 
-        Sort sort = new Sort(Sort.Direction.DESC, "createDate");
-        Pageable pageable = new PageRequest(page, 24, sort);
+//        Sort sort = new Sort(Sort.Direction.DESC, "createDate");
+        Pageable pageable = new Pageable(page, 24);
         Page<PhotosModel> pages = photosService.find(pageable);
         logger.info("page size {}", pages.getContent().size());
         model.setViewName("/portal/common/next");

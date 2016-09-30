@@ -1,15 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aboutdata.web.controller.member;
 
 import com.aboutdata.domain.Member;
-import com.aboutdata.domain.MemberInfomation;
 import com.aboutdata.service.AreaService;
-import com.aboutdata.service.MemberAttributeService;
-import com.aboutdata.service.MemberInfomationService;
 import com.aboutdata.service.MemberService;
 import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
@@ -20,10 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.aboutdata.security.utils.SecurityPasswordUtils;
 import com.aboutdata.service.ImageGraphicsService;
-import com.aboutdata.utils.EasyImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,12 +27,6 @@ public class SettingsController {
 
     @Resource(name = "memberServiceImpl")
     private MemberService memberService;
-
-    @Resource
-    private MemberInfomationService memberInfomationService;
-
-    @Resource(name = "memberAttributeServiceImpl")
-    private MemberAttributeService memberAttributeService;
 
     @Resource(name = "areaServiceImpl")
     private AreaService areaService;
@@ -63,9 +45,6 @@ public class SettingsController {
         Member member = memberService.getCurrent();
         model.addAttribute("member", member);
 
-        MemberInfomation memberInfomation = memberInfomationService.findByMember(member);
-        model.addAttribute("memberInfomation", memberInfomation);
-
         return "/member/settings/profile";
     }
 
@@ -81,17 +60,6 @@ public class SettingsController {
     public String updateProfile(String description, String backgroundId, ModelMap model) {
         Member member = memberService.getCurrent();
 
-        MemberInfomation mInfo = memberInfomationService.findByMember(member);
-
-        if (mInfo == null) {
-            mInfo = new MemberInfomation();
-        }
-        mInfo.setDescription(description);
-        mInfo.setBackgroundId(backgroundId);
-        mInfo.setMember(member);
-
-        memberInfomationService.update(mInfo);
-
         model.addAttribute("member", member);
 
         return "redirect:/member/settings/profile";
@@ -106,10 +74,7 @@ public class SettingsController {
     @RequestMapping(value = "/account", method = RequestMethod.GET)
     public String displayEditAccount(ModelMap model) {
         Member member = memberService.getCurrent();
-        MemberInfomation memberInfomation = memberInfomationService.findByMember(member);
-
         model.addAttribute("member", member);
-        model.addAttribute("memberInfomation", memberInfomation);
         return "/member/settings/account";
     }
 
@@ -148,11 +113,8 @@ public class SettingsController {
     @RequestMapping(value = "/avatar", method = RequestMethod.GET)
     public String displaEditAvatar(ModelMap model) {
         Member member = memberService.getCurrent();
-        MemberInfomation memberInfomation = memberInfomationService.findByMember(member);
 
         model.addAttribute("member", member);
-        model.addAttribute("memberInfomation", memberInfomation);
-
         return "/member/settings/avatar";
     }
 
@@ -188,11 +150,8 @@ public class SettingsController {
     @RequestMapping(value = "/browsing", method = RequestMethod.GET)
     public String displaEditBrowsing(ModelMap model) {
         Member member = memberService.getCurrent();
-        MemberInfomation memberInfomation = memberInfomationService.findByMember(member);
 
         model.addAttribute("member", member);
-        model.addAttribute("memberInfomation", memberInfomation);
-
         return "/member/settings/browsing";
     }
 

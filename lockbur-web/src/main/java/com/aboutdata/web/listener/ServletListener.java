@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aboutdata.web.listener;
 
 import com.aboutdata.commons.application.ApplicationBean;
@@ -37,7 +32,8 @@ public class ServletListener extends ContextLoaderListener implements HttpSessio
         ApplicationBean appBean = (ApplicationBean) springContext.getBean("appBean");
         
         //设置version 从grunt打包到生产使用
-        try (InputStream is = sc.getResourceAsStream("/package.json")) {
+        try{
+            InputStream is = sc.getResourceAsStream("/package.json");
             ObjectMapper mapper = new ObjectMapper();
             String version = mapper.readTree(is).path("version").asText();
             appBean.setGruntVersion(version);

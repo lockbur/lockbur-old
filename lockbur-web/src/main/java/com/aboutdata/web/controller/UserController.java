@@ -1,15 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aboutdata.web.controller;
 
 import com.aboutdata.domain.Comments;
 import com.aboutdata.domain.Member;
-import com.aboutdata.domain.MemberInfomation;
 import com.aboutdata.service.CommentsService;
-import com.aboutdata.service.MemberInfomationService;
 import com.aboutdata.service.MemberService;
 import java.util.List;
 import javax.annotation.Resource;
@@ -38,9 +31,6 @@ public class UserController {
     private MemberService memberService;
 
     @Resource
-    private MemberInfomationService memberInfomationService;
-
-    @Resource
     private CommentsService commentsService;
 
     /**
@@ -53,12 +43,10 @@ public class UserController {
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
     public String user(@PathVariable("username") String username, Model model) {
         Member member = memberService.findByUsername(username);
-        MemberInfomation memberInfomation = memberInfomationService.findByMember(member);
 
         List<Comments> userComments = commentsService.findByUserId(member.getId());
 
         model.addAttribute("user", member);
-        model.addAttribute("userInfomation", memberInfomation);
 
         model.addAttribute("userComments", userComments);
         

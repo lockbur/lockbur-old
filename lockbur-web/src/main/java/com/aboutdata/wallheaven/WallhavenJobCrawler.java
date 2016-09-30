@@ -1,23 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aboutdata.wallheaven;
 
 import com.aboutdata.commons.application.ApplicationBean;
 import com.aboutdata.domain.Member;
 import com.aboutdata.domain.Photos;
-import com.aboutdata.domain.PhotosAlbum;
 import com.aboutdata.service.PhotosService;
 import com.aboutdata.service.StorageService;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -76,8 +66,6 @@ public class WallhavenJobCrawler {
 
                         Member m = new Member();
                         m.setId("1");
-                        PhotosAlbum photosAlbum = new PhotosAlbum();
-                        photosAlbum.setId("1");
 
                         Photos photos = new Photos();
 
@@ -85,8 +73,8 @@ public class WallhavenJobCrawler {
                         photos.setWallhaven(wallpaperId);
                         photos.setOrder(1);
                         photos.setTitle(wallpaperId);
-                        photos.setMember(m);
-                        photos.setAlbum(photosAlbum);
+                        //photos.setMember(m);
+                        //photos.setAlbum(photosAlbum);
                         photos.setStorageHost(appBean.getSystemConfig().getDefaultStorageHost());
                         photos.setThumbnail(thumbnailPath);
                         photos.setMedium(thumbnailPath);
@@ -112,8 +100,8 @@ public class WallhavenJobCrawler {
 
         Member m = new Member();
         m.setId("1");
-        PhotosAlbum photosAlbum = new PhotosAlbum();
-        photosAlbum.setId("1");
+        //PhotosAlbum photosAlbum = new PhotosAlbum();
+        //photosAlbum.setId("1");
         Connection conn = Jsoup.connect(url).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36");
 
         if (conn.response().statusCode() == 200) {
@@ -127,8 +115,8 @@ public class WallhavenJobCrawler {
         photos.setWallhaven(wallpaperId);
         photos.setOrder(1);
         photos.setTitle(wallpaperId);
-        photos.setMember(m);
-        photos.setAlbum(photosAlbum);
+        //photos.setMember(m);
+        //photos.setAlbum(photosAlbum);
 
         Elements properties = doc.select("dl dt");
         Element image = doc.select("section img").get(0);

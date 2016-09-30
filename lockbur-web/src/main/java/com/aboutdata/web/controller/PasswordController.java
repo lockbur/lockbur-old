@@ -1,31 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aboutdata.web.controller;
 
-import com.aboutdata.commons.ResponseMessage;
 import com.aboutdata.domain.Member;
-import com.aboutdata.domain.SafeKey;
 import com.aboutdata.security.utils.SecurityPasswordUtils;
 import com.aboutdata.service.CaptchaService;
 import com.aboutdata.service.EmailService;
 import com.aboutdata.service.MemberService;
-import java.util.List;
-import java.util.UUID;
 import javax.annotation.Resource;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 /**
  * @ Controller - 密码
  * @ author Administrator
@@ -81,24 +67,24 @@ public class PasswordController {
             logger.info("用户信息不存在");
             return "/portal/password/forget";
         }
-        List<SafeKey> safeKeys = memberService.getSafeKey(member.getId());
+       // List<SafeKey> safeKeys = memberService.getSafeKey(member.getId());
 
         /**
          * 用户可能多次发送重置信息 只有要一次匹配上即可
          */
         Boolean keyIsMacth = false;
-        for (SafeKey safeKey : safeKeys) {
-            logger.info("key {}" + safeKey.getValue());
-            logger.info("mykey {}" + key);
-            if (safeKey.getValue() != null || safeKey.getValue().equals(key)) {
-                //如果密钥正确 判断是都过期
-                if (!safeKey.hasExpired()) {
-                    logger.info("安全密钥已过期");
-                    keyIsMacth = true;
-                    break;
-                }
-            }
-        }
+//        for (SafeKey safeKey : safeKeys) {
+//            logger.info("key {}" + safeKey.getValue());
+//            logger.info("mykey {}" + key);
+//            if (safeKey.getValue() != null || safeKey.getValue().equals(key)) {
+//                //如果密钥正确 判断是都过期
+//                if (!safeKey.hasExpired()) {
+//                    logger.info("安全密钥已过期");
+//                    keyIsMacth = true;
+//                    break;
+//                }
+//            }
+//        }
         if (!keyIsMacth) {
             //没有发送过重置链接 或者重置链接不正确
             logger.info("没有发送过重置链接 或者重置链接不正确");
@@ -136,30 +122,30 @@ public class PasswordController {
          * @ 用户可能多次发送重置信息
          * @ 后期修改内容 可以根据safekey id的 来判断 这样就不会循环多次了
          */
-        List<SafeKey> safeKeys = memberService.getSafeKey(member.getId());
-
-        Boolean keyIsMacth = false;
-        for (SafeKey safeKey : safeKeys) {
-            logger.info("key {}" + safeKey.getValue());
-            logger.info("mykey {}" + key);
-            if (safeKey.getValue() != null || safeKey.getValue().equals(key)) {
-                //如果密钥正确 判断是否过期
-                if (!safeKey.hasExpired()) {
-                    keyIsMacth = true;
-                    break;
-                }
-            }
-        }
-        if (!keyIsMacth) {
-            //没有发送过重置链接 或者重置链接不正确 或者 key已过期
-            logger.info("没有发送过重置链接 或者重置链接不正确 或者 key已过期");
-            return "/portal/password/forget";
-        }
+//        List<SafeKey> safeKeys = memberService.getSafeKey(member.getId());
+//
+//        Boolean keyIsMacth = false;
+//        for (SafeKey safeKey : safeKeys) {
+//            logger.info("key {}" + safeKey.getValue());
+//            logger.info("mykey {}" + key);
+//            if (safeKey.getValue() != null || safeKey.getValue().equals(key)) {
+//                //如果密钥正确 判断是否过期
+//                if (!safeKey.hasExpired()) {
+//                    keyIsMacth = true;
+//                    break;
+//                }
+//            }
+//        }
+//        if (!keyIsMacth) {
+//            //没有发送过重置链接 或者重置链接不正确 或者 key已过期
+//            logger.info("没有发送过重置链接 或者重置链接不正确 或者 key已过期");
+//            return "/portal/password/forget";
+//        }
         String salt = member.getSalt();
         String passphrase = SecurityPasswordUtils.getPassphrase(salt, password);
         member.setPassword(passphrase);
         memberService.update(member);
-        memberService.expireSafekey(member.getId());
+        //memberService.expireSafekey(member.getId());
 
         return "redirect:/login";
     }

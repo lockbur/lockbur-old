@@ -3,12 +3,11 @@ package com.aboutdata.web.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.aboutdata.rest.Page;
+import com.aboutdata.rest.Pageable;
+import com.aboutdata.rest.Sort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +21,6 @@ import com.aboutdata.service.PhotosService;
  * 排行榜 初步使用查看最多来排名
  *
  * @author Administrator
- *
  */
 @Controller
 @RequestMapping("/top")
@@ -43,8 +41,7 @@ public class TopController {
     @RequestMapping
     public String list(HttpServletRequest request, Model model) {
 
-        Sort sort = new Sort(Sort.Direction.DESC, "order");
-        Pageable pageable = new PageRequest(0, 24, sort);
+        Pageable pageable = new Pageable(0, 24);
         Page<PhotosModel> pages = photosService.find(pageable);
 
         model.addAttribute("pages", pages);
@@ -68,8 +65,8 @@ public class TopController {
             //消除data spring 默认从0开始问题
             page = page - 1;
         }
-        Sort sort = new Sort(Sort.Direction.DESC, "order");
-        Pageable pageable = new PageRequest(page, 24, sort);
+
+        Pageable pageable = new Pageable(page, 24);
         Page<PhotosModel> pages = photosService.find(pageable);
 
         logger.info("page size {}", pages.getContent().size());

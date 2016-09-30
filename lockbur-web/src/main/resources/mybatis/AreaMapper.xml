@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aboutdata.dao.AreaDao">
+
+    <resultMap id="adminResultMap" type="com.aboutdata.domain.Area">
+        <result property="id" column="id"></result>
+        <result property="name" column="name"></result>
+        <result property="fullName" column="fullName"></result>
+        <result property="treePath" column="treePath"></result>
+        <result property="parentId" column="parentId"></result>
+
+        <result property="createDate" column="createDate"></result>
+        <result property="modifyDate" column="modifyDate"></result>
+    </resultMap>
+
+    <select id="usernameExists" parameterType="String" resultType="int">
+       select area from xx_area area where area.parent_id is null order by area.order asc
+    </select>
+
+
+</mapper>

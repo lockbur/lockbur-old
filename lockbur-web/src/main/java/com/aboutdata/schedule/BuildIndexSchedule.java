@@ -8,6 +8,8 @@ package com.aboutdata.schedule;
 import com.aboutdata.commons.enums.PhotoStatus;
 import com.aboutdata.dao.PhotosDao;
 import com.aboutdata.domain.Photos;
+import com.aboutdata.rest.Page;
+import com.aboutdata.rest.Pageable;
 import com.aboutdata.schedule.task.BuildIndexTask;
 import com.aboutdata.service.PhotosService;
 import javax.annotation.Resource;
@@ -15,9 +17,6 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.impl.XMLResponseParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
@@ -49,12 +48,12 @@ public class BuildIndexSchedule {
         logger.info("=============================================");
         logger.info("ActiveCount :" + taskExecutor.getActiveCount());
         if (taskExecutor.getActiveCount() < 10) {
-            Pageable pageable = new PageRequest(page, pagesize);
-            Page<Photos> pages = photosDao.findByStatus(PhotoStatus.APPROVED, pageable);
+            Pageable pageable = new Pageable(page, pagesize);
+           // Page<Photos> pages = photosDao.findByStatus(PhotoStatus.APPROVED, pageable);
             logger.info("solrServer : {}", solrServer.getBaseURL());
-            for (Photos photo : pages.getContent()) {
-                taskExecutor.execute(new BuildIndexTask(photo, photosService, solrServer));
-            }
+            //for (Photos photo : pages.getContent()) {
+                //taskExecutor.execute(new BuildIndexTask(photo, photosService, solrServer));
+           // }
         }
     }
 
