@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aboutdata.service.impl;
 
 import com.aboutdata.commons.enums.Oauth2Type;
@@ -40,7 +35,8 @@ public class OpenAuth2ServiceImpl implements OpenAuth2Service {
     @Override
     @Transactional
     public OpenAuth2 save(OpenAuth2 openAuth2) {
-        return openAuth2Dao.save(openAuth2);
+//        return openAuth2Dao.save(openAuth2);
+        return null;
     }
 
     @Override
