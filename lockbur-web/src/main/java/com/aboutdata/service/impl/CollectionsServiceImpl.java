@@ -2,7 +2,6 @@ package com.aboutdata.service.impl;
 
 import com.aboutdata.dao.CollectionsDao;
 import com.aboutdata.domain.Collections;
-import com.aboutdata.domain.Photos;
 import com.aboutdata.service.CollectionsService;
 import java.util.List;
 import javax.annotation.Resource;

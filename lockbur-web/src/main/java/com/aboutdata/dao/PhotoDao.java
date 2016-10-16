@@ -1,13 +1,13 @@
 package com.aboutdata.dao;
 
-import com.aboutdata.commons.enums.PhotoStatus;
 import java.util.List;
-import com.aboutdata.domain.Photos;
+import com.aboutdata.domain.Photo;
+
 /**
  *
  * @author youyou
  */
-public interface PhotosDao{
+public interface PhotoDao{
 
     /**
      * 查询出所有id 用于随机序列
@@ -22,6 +22,6 @@ public interface PhotosDao{
      * @param ids
      * @return
      */
-    public List<Photos> findByIds(List<String> ids);
+    public List<Photo> findByIds(List<String> ids);
 
 }

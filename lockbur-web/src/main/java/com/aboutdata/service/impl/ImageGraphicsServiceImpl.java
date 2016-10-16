@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aboutdata.service.impl;
 
 import com.aboutdata.commons.application.ApplicationBean;
-import com.aboutdata.domain.Photos;
+import com.aboutdata.domain.Photo;
 import com.aboutdata.service.ImageGraphicsService;
-import com.aboutdata.service.PhotosService;
+import com.aboutdata.service.PhotoService;
 import com.aboutdata.service.StorageService;
 import com.aboutdata.utils.EasyImage;
 import java.io.File;
@@ -34,7 +29,7 @@ public class ImageGraphicsServiceImpl implements ImageGraphicsService {
     Logger logger = LoggerFactory.getLogger(ImageGraphicsServiceImpl.class);
 
     @Resource
-    private PhotosService photosService;
+    private PhotoService photoService;
 
     @Resource
     private StorageService storageService;
@@ -46,7 +41,7 @@ public class ImageGraphicsServiceImpl implements ImageGraphicsService {
 
     @Override
     @Deprecated
-    public void build(Photos photos, MultipartFile multipartFile) {
+    public void build(Photo photo, MultipartFile multipartFile) {
         if (multipartFile != null && !multipartFile.isEmpty()) {
             try {
                 File tempFile = new File(System.getProperty("java.io.tmpdir") + "/upload_" + multipartFile.getOriginalFilename());

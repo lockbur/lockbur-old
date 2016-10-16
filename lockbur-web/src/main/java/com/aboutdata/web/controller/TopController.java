@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.aboutdata.rest.Page;
 import com.aboutdata.rest.Pageable;
-import com.aboutdata.rest.Sort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,9 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.aboutdata.model.PhotosModel;
-import com.aboutdata.service.PhotosService;
+import com.aboutdata.model.PhotoModel;
+import com.aboutdata.service.PhotoService;
 
 /**
  * 排行榜 初步使用查看最多来排名
@@ -29,7 +27,7 @@ public class TopController {
     Logger logger = LoggerFactory.getLogger(TopController.class);
 
     @Resource
-    private PhotosService photosService;
+    private PhotoService photoService;
 
     /**
      * 每次加载24张图片
@@ -42,7 +40,7 @@ public class TopController {
     public String list(HttpServletRequest request, Model model) {
 
         Pageable pageable = new Pageable(0, 24);
-        Page<PhotosModel> pages = photosService.find(pageable);
+        Page<PhotoModel> pages = photoService.find(pageable);
 
         model.addAttribute("pages", pages);
         return "/portal/top";
@@ -67,7 +65,7 @@ public class TopController {
         }
 
         Pageable pageable = new Pageable(page, 24);
-        Page<PhotosModel> pages = photosService.find(pageable);
+        Page<PhotoModel> pages = photoService.find(pageable);
 
         logger.info("page size {}", pages.getContent().size());
 

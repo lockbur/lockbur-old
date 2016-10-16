@@ -19,6 +19,7 @@ import java.awt.image.BufferedImage;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Service - 验证码
@@ -29,14 +30,14 @@ public class CaptchaServiceImpl implements CaptchaService {
     private static String captchaId = "Patchca";
 
     @Override
-    public BufferedImage buildImage(HttpServletSession session) {
+    public BufferedImage buildImage(HttpSession session) {
         Captcha captcha = Patchca.next();
         session.setAttribute(captchaId, captcha.getChallenge());
         return captcha.getImage();
     }
 
     @Override
-    public boolean isValid(HttpServletSession session, String captcha) {
+    public boolean isValid(HttpSession session, String captcha) {
         String captchaWord = session.getAttribute(captchaId).toString();
         if (StringUtils.isNotEmpty(captcha)) {
             return captcha.equalsIgnoreCase(captchaWord);

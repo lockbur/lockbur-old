@@ -1,8 +1,8 @@
 package com.aboutdata.web.controller;
 
-import com.aboutdata.model.PhotosModel;
+import com.aboutdata.model.PhotoModel;
 import com.aboutdata.model.TagModel;
-import com.aboutdata.service.PhotosService;
+import com.aboutdata.service.PhotoService;
 import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,11 +23,11 @@ public class WallpaperController {
     Logger logger = LoggerFactory.getLogger(WallpaperController.class);
 
     @Resource
-    private PhotosService photosService;
+    private PhotoService photoService;
 
     @RequestMapping(value = "/{photosId}", method = RequestMethod.GET)
     public String wallpaper(@PathVariable("photosId") String photosId, ModelMap model) {
-        PhotosModel photos = photosService.views(photosId);
+        PhotoModel photos = photoService.views(photosId);
         String tagString = "";
         if (photos.getTags() != null) {
             for (TagModel tag : photos.getTags()) {

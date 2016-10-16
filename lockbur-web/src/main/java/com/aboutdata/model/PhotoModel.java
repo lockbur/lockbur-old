@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author Administrator
  */
-public class PhotosModel extends BaseModel {
+public class PhotoModel extends BaseModel {
 
     private String title;
 

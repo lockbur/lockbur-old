@@ -18,9 +18,6 @@
        select obj.* from xx_comments obj where obj.member.id =#{memberId} order by obj.createDate asc
     </select>
 
-    <select id="findByTypeAndEntityId" resultMap="commentsResultMap">
-        select obj.* from xx_comments obj where obj.member.id =#{memberId} and obj.isDefault=true order by obj.createDate asc
-    </select>
 
     <select id="findByType" resultMap="commentsResultMap">
         select obj.* from xx_comments obj where obj.member.id =#{memberId} and obj.isDefault=true order by obj.createDate asc

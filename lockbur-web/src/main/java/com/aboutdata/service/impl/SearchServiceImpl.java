@@ -1,20 +1,15 @@
 package com.aboutdata.service.impl;
 
-import com.aboutdata.domain.Photos;
-import com.aboutdata.domain.Tag;
+import com.aboutdata.domain.Photo;
 import com.aboutdata.model.MemberModel;
-import com.aboutdata.model.PhotosModel;
-import com.aboutdata.model.TagModel;
-import com.aboutdata.model.dto.TagDTO;
+import com.aboutdata.model.PhotoModel;
 import com.aboutdata.rest.Page;
 import com.aboutdata.rest.Pageable;
 import com.aboutdata.service.ConfigService;
 import com.aboutdata.service.SearchService;
-import com.aboutdata.service.TagService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import javax.annotation.Resource;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -40,9 +35,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class SearchServiceImpl implements SearchService {
 
     Logger logger = LoggerFactory.getLogger(SearchServiceImpl.class);
-
-    @Resource
-    private TagService tagService;
 
     @Resource
     private ConfigService configService;
@@ -75,7 +67,7 @@ public class SearchServiceImpl implements SearchService {
      * 构建索引
      */
     @Override
-    public void build(Photos photo) {
+    public void build(Photo photo) {
         logger.info("photo {}", photo.getId());
         SolrInputDocument doc = new SolrInputDocument();
 
@@ -97,15 +89,14 @@ public class SearchServiceImpl implements SearchService {
 //            doc.addField("tags", "");
 //        }
 
-        doc.addField("large", photo.getLarge());
-        doc.addField("medium", photo.getMedium());
+
         doc.addField("thumbnail", photo.getThumbnail());
         doc.addField("source", photo.getSource());
         //doc.addField("member_id", photo.getMember().getId());
         //doc.addField("member_name", photo.getMember().getUsername());
-        doc.addField("wallhaven", photo.getWallhaven());
-        doc.addField("create_date", photo.getCreateDate());
-        doc.addField("modify_date", photo.getModifyDate());
+        //doc.addField("wallhaven", photo.getWallhaven());
+        //doc.addField("create_date", photo.getCreateDate());
+        //doc.addField("modify_date", photo.getModifyDate());
         try {
             solrServer.add(doc);
             solrServer.commit();
@@ -123,7 +114,7 @@ public class SearchServiceImpl implements SearchService {
      * @return
      */
     @Override
-    public Page<PhotosModel> search(String keyword, Pageable pageable) {
+    public Page<PhotoModel> search(String keyword, Pageable pageable) {
         SolrQuery query = new SolrQuery();
         query.setQuery("tags:(" + keyword + ")  OR title:(" + keyword + ")");
         try {
@@ -134,7 +125,7 @@ public class SearchServiceImpl implements SearchService {
             QueryResponse rsp = solrServer.query(query);
             //获取返回结果
             SolrDocumentList docs = rsp.getResults();
-            List<PhotosModel> models = new ArrayList<PhotosModel>();
+            List<PhotoModel> models = new ArrayList<PhotoModel>();
             for (SolrDocument solrDocument : docs) {
                 String id = solrDocument.getFieldValue("id").toString();
                 String title = solrDocument.getFieldValue("title").toString();
@@ -156,9 +147,9 @@ public class SearchServiceImpl implements SearchService {
 
                 String tags = solrDocument.getFieldValue("tags").toString();
 
-                Set<Tag> tagSet = tagService.getTagsFromString(tags);
+                //Set<Tag> tagSet = tagService.getTagsFromString(tags);
 
-                PhotosModel model = new PhotosModel();
+                PhotoModel model = new PhotoModel();
                 model.setId(id);
                 model.setTitle(title);
                 model.setLarge(large);
@@ -172,12 +163,12 @@ public class SearchServiceImpl implements SearchService {
 
                 model.setMember(member);
                 //转换tag
-                List<TagModel> tagList = TagDTO.getTagModelsDTO(tagSet);
-                model.setTags(tagList);
+                //List<TagModel> tagList = TagDTO.getTagModelsDTO(tagSet);
+                //model.setTags(tagList);
 
                 models.add(model);
             }
-           // Page<PhotosModel> result = new PageImpl<PhotosModel>(models, pageable, docs.getNumFound());
+           // Page<PhotoModel> result = new PageImpl<PhotoModel>(models, pageable, docs.getNumFound());
             //return result;
         } catch (SolrServerException ex) {
             logger.error("build index error {}", ex);

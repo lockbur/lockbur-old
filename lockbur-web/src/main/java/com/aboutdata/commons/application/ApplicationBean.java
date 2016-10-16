@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.annotation.Resource;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -26,9 +27,7 @@ import org.springframework.stereotype.Component;
 @Component("appBean")
 @Scope("singleton")
 public class ApplicationBean {
-
-    @InjectLogger
-    private Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationBean.class);
 
     private Features features;
 

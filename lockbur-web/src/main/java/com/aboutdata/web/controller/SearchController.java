@@ -1,6 +1,6 @@
 package com.aboutdata.web.controller;
 
-import com.aboutdata.model.PhotosModel;
+import com.aboutdata.model.PhotoModel;
 import com.aboutdata.rest.Page;
 import com.aboutdata.rest.Pageable;
 import com.aboutdata.service.SearchService;
@@ -36,7 +36,7 @@ public class SearchController {
             return "/portal/search/single";
         }
         Pageable pageable = new Pageable(1, 24);
-        Page<PhotosModel> pages = searchService.search(keywords, pageable);
+        Page<PhotoModel> pages = searchService.search(keywords, pageable);
         model.addAttribute("pages", pages);
         model.addAttribute("keywords", keywords);
         return "/portal/search/result";
@@ -55,7 +55,7 @@ public class SearchController {
     public ModelAndView infinitescroll(int page, String keywords, ModelAndView model) {
         logger.info("page now {}", page);
         Pageable pageable = new Pageable(page, 24);
-        Page<PhotosModel> pages = searchService.search(keywords, pageable);
+        Page<PhotoModel> pages = searchService.search(keywords, pageable);
         logger.info("page size {}", pages.getContent().size());
         model.setViewName("/portal/search/next");
         model.addObject("pages", pages);

@@ -2,27 +2,20 @@ package com.aboutdata.service.impl;
 
 import com.aboutdata.commons.application.ApplicationBean;
 import com.aboutdata.commons.enums.PhotoStatus;
-import com.aboutdata.commons.enums.PhotosRequestStatus;
-import com.aboutdata.dao.PhotosDao;
-import com.aboutdata.domain.Photos;
-import com.aboutdata.domain.Tag;
-import com.aboutdata.model.PhotosModel;
+import com.aboutdata.dao.PhotoDao;
+import com.aboutdata.domain.Photo;
+import com.aboutdata.model.PhotoModel;
 import com.aboutdata.model.dto.PhotosDTO;
 import com.aboutdata.rest.Page;
 import com.aboutdata.rest.Pageable;
 import com.aboutdata.service.ImageGraphicsService;
-import com.aboutdata.service.PhotosService;
+import com.aboutdata.service.PhotoService;
 import com.aboutdata.service.SearchService;
 import com.aboutdata.service.StorageService;
-import com.aboutdata.service.TagService;
-
-import java.io.File;
-
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import javax.annotation.Resource;
-import org.apache.commons.lang3.StringUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -34,18 +27,15 @@ import org.springframework.transaction.annotation.Transactional;
  * @author youyou
  */
 @Service("photosServiceImpl")
-public class PhotosServiceImpl implements PhotosService {
+public class PhotoServiceImpl implements PhotoService {
 
-    Logger logger = LoggerFactory.getLogger(PhotosServiceImpl.class);
+    Logger logger = LoggerFactory.getLogger(PhotoServiceImpl.class);
 
     @Resource
     private ApplicationBean appBean;
 
     @Resource
-    private PhotosDao photosDao;
-
-    @Resource
-    private TagService tagService;
+    private PhotoDao photoDao;
 
     @Resource
     private ImageGraphicsService imageGraphicsService;
@@ -58,7 +48,7 @@ public class PhotosServiceImpl implements PhotosService {
 
     @Override
     @Transactional
-    public Photos get(String id) {
+    public Photo get(String id) {
         //Photos photo = photosDao.findOne(id);
 
         //return photo;
@@ -66,39 +56,39 @@ public class PhotosServiceImpl implements PhotosService {
     }
 
     @Override
-    public Page<PhotosModel> findByStatus(PhotoStatus status, Pageable pageable) {
+    public Page<PhotoModel> findByStatus(PhotoStatus status, Pageable pageable) {
 
         //Page<Photos> page = photosDao.findByStatus(status, pageable);
 
         //List<Photos> photos = page.getContent();
 
-        //List<PhotosModel> models = PhotosDTO.getPhotosModeslDTO(photos);
-       // Page<PhotosModel> result = new PageImpl<PhotosModel>(models, pageable, page.getTotalElements());
+        //List<PhotoModel> models = PhotosDTO.getPhotosModeslDTO(photos);
+       // Page<PhotoModel> result = new PageImpl<PhotoModel>(models, pageable, page.getTotalElements());
 
         //return result;
         return null;
     }
 
     @Override
-    public Page<PhotosModel> findByStatusList(List<PhotoStatus> statusList, Pageable pageable) {
+    public Page<PhotoModel> findByStatusList(List<PhotoStatus> statusList, Pageable pageable) {
         //Page<Photos> page = photosDao.findByStatusIn(statusList, pageable);
 
         //List<Photos> photos = page.getContent();
 
-        //List<PhotosModel> models = PhotosDTO.getPhotosModeslDTO(photos);
-        //Page<PhotosModel> result = new PageImpl<PhotosModel>(models, pageable, page.getTotalElements());
+        //List<PhotoModel> models = PhotosDTO.getPhotosModeslDTO(photos);
+        //Page<PhotoModel> result = new PageImpl<PhotoModel>(models, pageable, page.getTotalElements());
 
         //return result;
         return null;
     }
 
     @Override
-    public Page<PhotosModel> find(Pageable pageable) {
+    public Page<PhotoModel> find(Pageable pageable) {
         //Page<Photos> page = photosDao.findAll(pageable);
         //List<Photos> photos = page.getContent();
 
-        //List<PhotosModel> models = PhotosDTO.getPhotosModeslDTO(photos);
-        //Page<PhotosModel> result = new PageImpl<PhotosModel>(models, pageable, page.getTotalElements());
+        //List<PhotoModel> models = PhotosDTO.getPhotosModeslDTO(photos);
+        //Page<PhotoModel> result = new PageImpl<PhotoModel>(models, pageable, page.getTotalElements());
 
         //return result;
 
@@ -106,9 +96,7 @@ public class PhotosServiceImpl implements PhotosService {
     }
 
     @Override
-    public List<Photos> findPhotosAndTags() {
-        //List<Photos> all = photosDao.findAll();
-        //return all;
+    public List<Photo> findPhotoAndTags() {
         return null;
     }
 
@@ -146,13 +134,13 @@ public class PhotosServiceImpl implements PhotosService {
     }
 
     @Override
-    public List<Photos> findByAlbumId(String albumId) {
+    public List<Photo> findByAlbumId(String albumId) {
        // return photosDao.findByAlbumId(albumId);
         return null;
     }
 
     @Override
-    public PhotosModel findById(String id) {
+    public PhotoModel findById(String id) {
        // Photos photos = photosDao.findOne(id);
        // return PhotosDTO.getPhotosModelDTO(photos);
         return null;
@@ -160,7 +148,7 @@ public class PhotosServiceImpl implements PhotosService {
 
     @Override
     @Transactional
-    public Photos create(Photos photos) {
+    public Photo create(Photo photos) {
 
         //return photosDao.save(photos);
 
@@ -260,9 +248,9 @@ public class PhotosServiceImpl implements PhotosService {
     }
 
     @Override
-    public List<PhotosModel> random() {
+    public List<PhotoModel> random() {
 
-        List<String> ids = photosDao.findAllIds();
+        List<String> ids = photoDao.findAllIds();
         /**
          * *
          * 1 打乱顺序 造成随机效果 也要分页 2 分頁每次不是同一個隨機序列 每次分頁都是已給新的隨機隊列
@@ -270,9 +258,9 @@ public class PhotosServiceImpl implements PhotosService {
          */
         Collections.shuffle(ids);
         //取出24条记录
-        List<Photos> photos = photosDao.findByIds(ids.subList(0, 24));
+        List<Photo> photos = photoDao.findByIds(ids.subList(0, 24));
 
-        List<PhotosModel> result = PhotosDTO.getPhotosModeslDTO(photos);
+        List<PhotoModel> result = PhotosDTO.getPhotosModeslDTO(photos);
 
         return result;
     }
@@ -285,7 +273,7 @@ public class PhotosServiceImpl implements PhotosService {
      */
     @Override
     @Transactional
-    public PhotosModel views(String id) {
+    public PhotoModel views(String id) {
        // Photos photos = photosDao.findOne(id);
         //如果访问一次 就把该访问次数加1
         //photos.setOrder(photos.getOrder() + 1);

@@ -1,20 +1,13 @@
 package com.aboutdata.web.controller.member;
 
 import com.aboutdata.commons.ResponseMessage;
-import com.aboutdata.commons.enums.PhotoStatus;
 import com.aboutdata.domain.Member;
-
-import com.aboutdata.domain.Tag;
-import com.aboutdata.model.PhotosModel;
+import com.aboutdata.model.PhotoModel;
 import com.aboutdata.model.TagModel;
-import com.aboutdata.service.ImageGraphicsService;
-import com.aboutdata.service.MemberService;
-import com.aboutdata.service.PhotosService;
-import com.aboutdata.service.SearchService;
-import com.aboutdata.service.TagService;
-import java.util.Date;
-import java.util.List;
+import com.aboutdata.service.*;
+
 import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -36,9 +29,7 @@ public class PhotosController {
     Logger logger = LoggerFactory.getLogger(PhotosController.class);
 
     @Resource
-    private PhotosService photosService;
-
-
+    private PhotoService photoService;
 
     @Resource
     private ImageGraphicsService imageGraphicsService;
@@ -48,9 +39,6 @@ public class PhotosController {
 
     @Resource(name = "memberServiceImpl")
     private MemberService memberService;
-
-    @Resource
-    private TagService tagService;
 
     @RequestMapping(method = RequestMethod.GET)
 
@@ -63,7 +51,7 @@ public class PhotosController {
 
     @RequestMapping(value = "/wallpaper/{photosId}", method = RequestMethod.GET)
     public String wallpaper(@PathVariable("photosId") String photosId, ModelMap model) {
-        PhotosModel photos = photosService.findById(photosId);
+        PhotoModel photos = photoService.findById(photosId);
         String tagString = "";
         if (photos != null) {
             for (TagModel tag : photos.getTags()) {
@@ -75,41 +63,6 @@ public class PhotosController {
         model.addAttribute("tagString", tagString);
 
         return "/member/photos/wallpaper";
-    }
-
-    /**
-     * 普通用户可以为图片添加标签
-     *
-     * @param id
-     * @param tagName
-     * @param model
-     * @param rattr
-     * @return
-     */
-    @RequestMapping(value = "/addTags", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseMessage addTags(String id, String tagName, ModelMap model, RedirectAttributes rattr) {
-        Member member = memberService.getCurrent();
-        List<String> tags = tagService.findTagStringByName(tagName);
-        //判断是否存在该tag ,如果不存在就自动添加
-        if (tags == null || tags.isEmpty()) {
-            Tag tag = new Tag();
-            tag.setName(tagName);
-            tag.setMember(member);
-            tag.setCreateDate(new Date());
-            tag.setModifyDate(new Date());
-            tagService.create(tag);
-        }
-
-        photosService.addTags(id, tagName);
-        /**
-         * @ 添加新标签后需要更新索引
-         * @ 这里修改APPROVED
-         * @ 为了定时器BuildIndexSchedule能及时更新索引到solr
-         */
-        photosService.makrStatus(id, PhotoStatus.APPROVED);
-
-        return ResponseMessage.success("添加标签成功");
     }
 
     /**
@@ -125,7 +78,7 @@ public class PhotosController {
     @ResponseBody
     public ResponseMessage removeTags(String id, String tagId, ModelMap model, RedirectAttributes rattr) {
         Member member = memberService.getCurrent();
-        photosService.removeTags(id, tagId);
+        photoService.removeTags(id, tagId);
         return ResponseMessage.success("添加标签成功");
     }
 

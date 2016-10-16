@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aboutdata.model.dto;
 
-import com.aboutdata.domain.Photos;
-import com.aboutdata.model.PhotosModel;
+import com.aboutdata.domain.Photo;
+import com.aboutdata.model.PhotoModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,19 +12,15 @@ import java.util.List;
  */
 public class PhotosDTO {
     
-    public static PhotosModel getPhotosModelDTO(Photos photos) {
-        PhotosModel result = null;
+    public static PhotoModel getPhotosModelDTO(Photo photos) {
+        PhotoModel result = null;
         if (photos != null) {
-            result = new PhotosModel();
+            result = new PhotoModel();
             
             result.setId(photos.getId());
             result.setThumbnail(photos.getThumbnail());
-            result.setLarge(photos.getLarge());
             result.setSource(photos.getSource());
-            result.setMedium(photos.getMedium());
-            
             result.setTitle(photos.getTitle());
-            
             result.setWidth(photos.getWidth());
             result.setHeight(photos.getHeight());
             result.setSize(photos.getSize());
@@ -38,13 +30,13 @@ public class PhotosDTO {
 
             //result.setTags(TagDTO.getTagModelsDTO(photos.getTags()));
             
-            result.setStatus(photos.getStatus());
-            result.setOrder(photos.getOrder());
+           // result.setStatus("1");
+           // result.setOrder(photos.getOrder());
             result.setDescription(photos.getDescription());
             result.setStorageHost(photos.getStorageHost());
-            result.setWallhaven(photos.getWallhaven());
-            result.setCreateDate(photos.getCreateDate());
-            result.setModifyDate(photos.getModifyDate());
+          //  result.setWallhaven(photos.getWallhaven());
+          //   result.setCreateDate(photos.getCreateDate());
+          //   result.setModifyDate(photos.getModifyDate());
         }
         return result;
     }
@@ -55,13 +47,13 @@ public class PhotosDTO {
      * @param photos
      * @return
      */
-    public static List<PhotosModel> getPhotosModeslDTO(List<Photos> photos) {
-        List<PhotosModel> result = new ArrayList<PhotosModel>(photos.size());
+    public static List<PhotoModel> getPhotosModeslDTO(List<Photo> photos) {
+        List<PhotoModel> result = new ArrayList<PhotoModel>(photos.size());
         if (photos.size() > 0) {
             result = new ArrayList(photos.size());
-            for (Photos photo : photos) {
+            for (Photo photo : photos) {
                 //DTO转换
-                PhotosModel model = new PhotosModel();
+                PhotoModel model = new PhotoModel();
 
                 //photos.setMember(m);
                 model.setId(photo.getId());
@@ -72,14 +64,14 @@ public class PhotosDTO {
                 model.setHeight(photo.getHeight());
 
 //              model.setAlbum(album);
-                model.setStatus(photo.getStatus());
-                model.setOrder(photo.getOrder());
+                //model.setStatus(photo.getStatus());
+               // model.setOrder(photo.getOrder());
                 model.setDescription(photo.getDescription());
                 
                 model.setStorageHost(photo.getStorageHost());
-                model.setWallhaven(photo.getWallhaven());
-                model.setCreateDate(photo.getCreateDate());
-                model.setModifyDate(photo.getModifyDate());
+                //model.setWallhaven(photo.getWallhaven());
+               // model.setCreateDate(photo.getCreateDate());
+               // model.setModifyDate(photo.getModifyDate());
                 
                 result.add(model);
             }

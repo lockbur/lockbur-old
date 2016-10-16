@@ -45,25 +45,6 @@ public class CommonController {
     private CaptchaService captchaService;
 
     /**
-     * 地区
-     */
-//	@RequestMapping(value = "/area", method = RequestMethod.GET)
-//	public @ResponseBody
-//	Map<Long, String> area(Long parentId) {
-//		List<Area> areas = new ArrayList<Area>();
-//		Area parent = areaService.findRoots(parentId);
-//		if (parent != null) {
-//			areas = new ArrayList<Area>(parent.getChildren());
-//		} else {
-//			areas = areaService.findRoots();
-//		}
-//		Map<Long, String> options = new HashMap<Long, String>();
-//		for (Area area : areas) {
-//			options.put(area.getId(), area.getName());
-//		}
-//		return options;
-//	}
-    /**
      * 验证码
      */
     @RequestMapping(value = "/captcha", method = RequestMethod.GET)
@@ -83,7 +64,7 @@ public class CommonController {
         ServletOutputStream servletOutputStream = null;
         try {
             servletOutputStream = response.getOutputStream();
-            BufferedImage bufferedImage = captchaService.buildImage(captchaId);
+            BufferedImage bufferedImage = captchaService.buildImage(request.getSession());
             ImageIO.write(bufferedImage, "jpg", servletOutputStream);
             servletOutputStream.flush();
         } catch (Exception e) {

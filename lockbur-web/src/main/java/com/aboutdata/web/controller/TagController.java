@@ -1,11 +1,9 @@
 package com.aboutdata.web.controller;
 
-import com.aboutdata.model.PhotosModel;
-import com.aboutdata.model.TagModel;
+import com.aboutdata.model.PhotoModel;
 import com.aboutdata.rest.Page;
 import com.aboutdata.rest.Pageable;
 import com.aboutdata.service.SearchService;
-import com.aboutdata.service.TagService;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +27,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TagController {
 
     Logger logger = LoggerFactory.getLogger(TagController.class);
-    @Resource
-    private TagService tagService;
 
     @Resource
     private SearchService searchService;
@@ -44,9 +40,9 @@ public class TagController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public String displayTags(HttpServletRequest request, Model model) {
-        Pageable pageable = new Pageable(0, 300);
-        Page<TagModel> pages = tagService.find(pageable);
-        model.addAttribute("pages", pages);
+       //Pageable pageable = new Pageable(0, 300);
+       // Page<TagModel> pages = tagService.find(pageable);
+       // model.addAttribute("pages", pages);
         return "/portal/tags";
     }
 
@@ -62,14 +58,14 @@ public class TagController {
     public String list(@PathVariable("page") int page, HttpServletRequest request, Model model) {
         if (page > 0) {
             Pageable pageable = new Pageable(page, 300);
-            Page<TagModel> pages = tagService.find(pageable);
-            model.addAttribute("pages", pages);
+            //Page<TagModel> pages = tagService.find(pageable);
+            //model.addAttribute("pages", pages);
             return "/portal/tags";
         } else {
             logger.error("{} page is not correct ", page);
             Pageable pageable = new Pageable(0, 300);
-            Page<TagModel> pages = tagService.find(pageable);
-            model.addAttribute("pages", pages);
+            //Page<TagModel> pages = tagService.find(pageable);
+            //model.addAttribute("pages", pages);
             return "/portal/tags";
         }
     }
@@ -82,7 +78,7 @@ public class TagController {
     @RequestMapping(value = "/s/{tagName}", method = RequestMethod.GET)
     public String search(@PathVariable("tagName") String tagName, Model model) {
         Pageable pageable = new Pageable(1, 24);
-        Page<PhotosModel> pages = searchService.search(tagName, pageable);
+        Page<PhotoModel> pages = searchService.search(tagName, pageable);
         model.addAttribute("pages", pages);
         model.addAttribute("keywords", tagName);
         return "/portal/search/result";
@@ -100,6 +96,7 @@ public class TagController {
     @ResponseBody
     public List<String> execute(String name, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
-        return tagService.findTagStringByName(name);
+        //return tagService.findTagStringByName(name);
+        return null;
     }
 }

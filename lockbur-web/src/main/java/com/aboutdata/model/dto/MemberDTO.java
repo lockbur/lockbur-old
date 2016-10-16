@@ -33,8 +33,8 @@ public class MemberDTO {
             result.setLockedDate(member.getLockedDate());
             result.setLoginFailureCount(member.getLoginFailureCount());
             result.setLoginDate(member.getLoginDate());
-            result.setCreateDate(member.getCreateDate());
-            result.setModifyDate(member.getModifyDate());
+            //result.setCreateDate(member.getCreateDate());
+            //result.setModifyDate(member.getModifyDate());
         }
         return result;
     }
@@ -61,8 +61,8 @@ public class MemberDTO {
                 model.setLockedDate(member.getLockedDate());
                 model.setLoginFailureCount(member.getLoginFailureCount());
                 model.setLoginDate(member.getLoginDate());
-                model.setCreateDate(member.getCreateDate());
-                model.setModifyDate(member.getModifyDate());
+                //model.setCreateDate(member.getCreateDate());
+                //model.setModifyDate(member.getModifyDate());
 
                 result.add(model);
             }

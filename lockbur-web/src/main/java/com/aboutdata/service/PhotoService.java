@@ -1,8 +1,8 @@
 package com.aboutdata.service;
 
 import com.aboutdata.commons.enums.PhotoStatus;
-import com.aboutdata.domain.Photos;
-import com.aboutdata.model.PhotosModel;
+import com.aboutdata.domain.Photo;
+import com.aboutdata.model.PhotoModel;
 import com.aboutdata.rest.Page;
 import com.aboutdata.rest.Pageable;
 
@@ -11,23 +11,23 @@ import java.util.List;
  *
  * @author youyou
  */
-public interface PhotosService {
+public interface PhotoService {
 
-    public Photos get(String id);
+    public Photo get(String id);
 
-    public Page<PhotosModel> find(Pageable pageable);
+    public Page<PhotoModel> find(Pageable pageable);
 
-    public List<Photos> findPhotosAndTags();
+    public List<Photo> findPhotoAndTags();
 
     public void addTags(String id, String tagString);
 
     public void removeTags(String id, String tagId);
 
-    public List<Photos> findByAlbumId(String albumId);
+    public List<Photo> findByAlbumId(String albumId);
 
-    public PhotosModel findById(String id);
+    public PhotoModel findById(String id);
 
-    public Photos create(Photos photos);
+    public Photo create(Photo Photo);
 
     public void delete(String id);
 
@@ -35,11 +35,11 @@ public interface PhotosService {
 
     public int makrStatus(String id, PhotoStatus status);
 
-    public Page<PhotosModel> findByStatus(PhotoStatus status, Pageable pageable);
+    public Page<PhotoModel> findByStatus(PhotoStatus status, Pageable pageable);
 
-    public Page<PhotosModel> findByStatusList(List<PhotoStatus> statusList, Pageable pageable);
+    public Page<PhotoModel> findByStatusList(List<PhotoStatus> statusList, Pageable pageable);
 
-    public List<PhotosModel> random();
+    public List<PhotoModel> random();
 
     /**
      * 查看壁纸 详情
@@ -47,7 +47,7 @@ public interface PhotosService {
      * @param id
      * @return
      */
-    public PhotosModel views(String id);
+    public PhotoModel views(String id);
 
     /**
      * 统计所有 壁纸数量

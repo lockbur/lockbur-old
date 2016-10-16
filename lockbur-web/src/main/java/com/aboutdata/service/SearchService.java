@@ -1,7 +1,7 @@
 package com.aboutdata.service;
 
-import com.aboutdata.domain.Photos;
-import com.aboutdata.model.PhotosModel;
+import com.aboutdata.domain.Photo;
+import com.aboutdata.model.PhotoModel;
 import com.aboutdata.rest.Page;
 import com.aboutdata.rest.Pageable;
 
@@ -16,7 +16,7 @@ public interface SearchService {
      *
      * @param photo
      */
-    public void build(Photos photo);
+    public void build(Photo photo);
 
     /**
      * 搜索
@@ -25,7 +25,7 @@ public interface SearchService {
      * @param pageable
      * @return
      */
-    public Page<PhotosModel> search(String keyword, Pageable pageable);
+    public Page<PhotoModel> search(String keyword, Pageable pageable);
 
     /**
      * 删除索引
